@@ -61,11 +61,30 @@
 
  .result-section {
      margin-top: 2rem;
-     padding: 1rem;
-     border-top: 1px solid #eee;
  }
 
- #fortune-result {
-     font-size: 1.1rem;
-     line-height: 1.8;
+ .fortune-section {
+     background-color: #f8f9fa;
+     border-radius: 8px;
+     padding: 1.5rem;
+     margin-bottom: 1.5rem;
+     border-left: 4px solid #3498db;
+ }
+
+ .fortune-section h4 {
+     color: #2c3e50;
+     margin-bottom: 0.8rem;
+     font-size: 1.2rem;
+ }
+
+ .fortune-section p {
+     color: #34495e;
+     margin-bottom: 0.5rem;
+ }
+
+ #fortune-result h3 {
+     color: #2c3e50;
+     margin-bottom: 1.5rem;
+     text-align: center;
+     font-size: 1.5rem;
  }
