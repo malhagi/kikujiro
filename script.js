@@ -1,3 +1,70 @@
+// 한자 검색 API URL
+const HANJA_API_URL = 'https://api.hanja.dict.naver.com/api/search';
+
+// 선택된 한자 저장
+let selectedHanja = [];
+
+// 한자 검색 함수
+async function searchHanja() {
+    const name = document.getElementById('name').value;
+    const suggestionsDiv = document.getElementById('hanja-suggestions');
+    
+    if (name.length < 1) {
+        suggestionsDiv.style.display = 'none';
+        return;
+    }
+
+    try {
+        const response = await fetch(`${HANJA_API_URL}?query=${encodeURIComponent(name)}`);
+        const data = await response.json();
+        
+        if (data.items && data.items.length > 0) {
+            suggestionsDiv.innerHTML = data.items
+                .map(item => `
+                    <div class="hanja-suggestion" onclick="selectHanja('${item.hanja}', '${item.meaning}')">
+                        ${item.hanja} - ${item.meaning}
+                    </div>
+                `)
+                .join('');
+            suggestionsDiv.style.display = 'block';
+        } else {
+            suggestionsDiv.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('한자 검색 중 오류 발생:', error);
+        suggestionsDiv.style.display = 'none';
+    }
+}
+
+// 한자 선택 함수
+function selectHanja(hanja, meaning) {
+    if (!selectedHanja.find(h => h.hanja === hanja)) {
+        selectedHanja.push({ hanja, meaning });
+        updateSelectedHanjaDisplay();
+    }
+    document.getElementById('name').value = '';
+    document.getElementById('hanja-suggestions').style.display = 'none';
+}
+
+// 선택된 한자 표시 업데이트
+function updateSelectedHanjaDisplay() {
+    const container = document.getElementById('selected-hanja');
+    container.innerHTML = selectedHanja
+        .map((item, index) => `
+            <div class="hanja-tag">
+                ${item.hanja} (${item.meaning})
+                <span class="remove" onclick="removeHanja(${index})">&times;</span>
+            </div>
+        `)
+        .join('');
+}
+
+// 한자 제거 함수
+function removeHanja(index) {
+    selectedHanja.splice(index, 1);
+    updateSelectedHanjaDisplay();
+}
+
 const fortunes = {
     // 사주팔자 운세
     destiny: [
@@ -40,12 +107,11 @@ const fortunes = {
 const ganji = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
 
 function getFortune() {
-    const name = document.getElementById('name').value;
     const birthdate = document.getElementById('birthdate').value;
     const resultDiv = document.getElementById('fortune-result');
 
-    if (!name || !birthdate) {
-        resultDiv.innerHTML = '<p style="color: red;">이름과 생년월일을 모두 입력해주세요.</p>';
+    if (selectedHanja.length === 0 || !birthdate) {
+        resultDiv.innerHTML = '<p style="color: red;">이름(한자)과 생년월일을 모두 입력해주세요.</p>';
         return;
     }
 
@@ -64,9 +130,16 @@ function getFortune() {
     // 간지 계산
     const ganjiIndex = (year + month + day) % ganji.length;
     
+    // 선택된 한자들의 의미를 결합
+    const hanjaMeanings = selectedHanja.map(h => h.meaning).join(', ');
+    
     // 운세 결과 표시
     resultDiv.innerHTML = `
-        <h3>${name}님의 오늘의 운세</h3>
+        <h3>${selectedHanja.map(h => h.hanja).join('')}님의 오늘의 운세</h3>
+        <div class="fortune-section">
+            <h4>이름의 의미</h4>
+            <p>${hanjaMeanings}</p>
+        </div>
         <div class="fortune-section">
             <h4>사주팔자 운세</h4>
             <p>${fortunes.destiny[destinyIndex]}</p>

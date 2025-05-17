@@ -13,7 +13,11 @@
         <h1>오늘의 운세</h1>
         <div class="fortune-box">
             <div class="input-section">
-                <input type="text" id="name" placeholder="이름을 입력하세요">
+                <div class="name-input-group">
+                    <input type="text" id="name" placeholder="이름을 입력하세요" oninput="searchHanja()">
+                    <div id="hanja-suggestions" class="hanja-suggestions"></div>
+                </div>
+                <div id="selected-hanja" class="selected-hanja"></div>
                 <input type="date" id="birthdate">
                 <button onclick="getFortune()">운세 보기</button>
             </div>

@@ -37,11 +37,65 @@
      margin-bottom: 2rem;
  }
 
+ .name-input-group {
+     position: relative;
+ }
+
  input {
      padding: 0.8rem;
      border: 1px solid #ddd;
      border-radius: 5px;
      font-size: 1rem;
+     width: 100%;
+ }
+
+ .hanja-suggestions {
+     position: absolute;
+     top: 100%;
+     left: 0;
+     right: 0;
+     background: white;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     margin-top: 0.5rem;
+     max-height: 200px;
+     overflow-y: auto;
+     display: none;
+     z-index: 1000;
+     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+ }
+
+ .hanja-suggestion {
+     padding: 0.8rem;
+     cursor: pointer;
+     border-bottom: 1px solid #eee;
+ }
+
+ .hanja-suggestion:hover {
+     background-color: #f8f9fa;
+ }
+
+ .selected-hanja {
+     display: flex;
+     gap: 0.5rem;
+     flex-wrap: wrap;
+     margin-top: 0.5rem;
+ }
+
+ .hanja-tag {
+     background-color: #e1f0ff;
+     padding: 0.5rem 1rem;
+     border-radius: 20px;
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+     font-size: 0.9rem;
+ }
+
+ .hanja-tag .remove {
+     cursor: pointer;
+     color: #666;
+     font-size: 1.2rem;
  }
 
  button {
