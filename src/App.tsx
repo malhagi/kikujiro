@@ -33,6 +33,19 @@ function App() {
     setCurrentIndex((prev) => (prev - 1 + words.length) % words.length)
   }
 
+  const handleSwipeLeft = () => {
+    handleNext()
+  }
+
+  const handleSwipeRight = () => {
+    handlePrev()
+  }
+
+  const handlePlayAudio = () => {
+    // 추가적인 오디오 재생 로직이 필요하면 여기에 추가
+    console.log('Audio played')
+  }
+
   const addWord = (newWord: Omit<Word, 'id'>) => {
     const word: Word = {
       ...newWord,
@@ -70,7 +83,12 @@ function App() {
         <div className="p-8 md:p-10 flex flex-col items-center gap-8">
           {words.length > 0 ? (
             <>
-              <WordCard word={words[currentIndex]} />
+              <WordCard 
+                word={words[currentIndex]} 
+                onSwipeLeft={handleSwipeLeft}
+                onSwipeRight={handleSwipeRight}
+                onPlayAudio={handlePlayAudio}
+              />
               <div className="flex items-center gap-5 mt-5">
                 <button 
                   onClick={handlePrev} 

@@ -22,7 +22,7 @@
     -moz-osx-font-smoothing: grayscale;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,5 +60,18 @@
   button, [role="button"] {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* Touch manipulation for better performance */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Prevent text selection during swipes */
+  .select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 } 
