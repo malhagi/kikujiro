@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import WordCard from './components/WordCard'
 import WordList from './components/WordList'
 
